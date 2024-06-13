@@ -26,8 +26,8 @@ public class UserController {
         log.info("login: {}", param);
         return ResponseEntity.ok(userService.login(param));
     }
-//logout은 내부 상태가 변하므로 GetMapping이 아닌 PostMapping으로 변경 필요
-    @GetMapping("/logout")
+
+    @PostMapping("/logout")
     public ResponseEntity<MessengerVO> logout(@RequestHeader("Authorization") String token) {
         log.info("logout: {}", token);
         return ResponseEntity.ok(userService.logout(token));
