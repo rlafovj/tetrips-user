@@ -1,4 +1,4 @@
-package com.tetrips.api.common.security.exception;
+package kr.co.tetrips.user.common.security.exception;
 
 public class UserLoginSuccessHandler {
 }

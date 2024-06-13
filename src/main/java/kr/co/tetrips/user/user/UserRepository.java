@@ -1,4 +1,4 @@
-package com.tetrips.api.user;
+package kr.co.tetrips.user.user;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

@@ -1,7 +1,7 @@
-package com.tetrips.api.user;
+package kr.co.tetrips.user.user;
 
-import com.tetrips.api.common.security.domain.RoleModel;
-import com.tetrips.api.token.Token;
+import kr.co.tetrips.user.common.security.domain.RoleModel;
+import kr.co.tetrips.user.token.Token;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;

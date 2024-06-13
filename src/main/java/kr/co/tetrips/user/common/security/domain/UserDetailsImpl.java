@@ -1,7 +1,7 @@
-package com.tetrips.api.common.security.domain;
+package kr.co.tetrips.user.common.security.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.tetrips.api.user.User;
+import kr.co.tetrips.user.user.User;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;

@@ -1,13 +1,12 @@
-package com.tetrips.api.common.security.filter;
+package kr.co.tetrips.user.common.security.filter;
 
-import com.tetrips.api.common.JwtProvider;
+import kr.co.tetrips.user.common.JwtProvider;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.core.annotation.Order;
 import org.springframework.lang.Nullable;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;

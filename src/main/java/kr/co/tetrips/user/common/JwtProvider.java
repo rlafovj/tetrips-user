@@ -1,7 +1,7 @@
-package com.tetrips.api.common;
+package kr.co.tetrips.user.common;
 
 
-import com.tetrips.api.user.UserDTO;
+import kr.co.tetrips.user.user.UserDTO;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
@@ -13,7 +13,6 @@ import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
 import java.time.Instant;
-import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.Base64;
 import java.util.Date;

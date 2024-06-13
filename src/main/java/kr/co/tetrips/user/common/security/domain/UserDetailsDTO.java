@@ -1,6 +1,6 @@
-package com.tetrips.api.common.security.domain;
+package kr.co.tetrips.user.common.security.domain;
 
-import com.tetrips.api.user.User;
+import kr.co.tetrips.user.user.User;
 import lombok.RequiredArgsConstructor;
 import java.util.ArrayList;
 import java.util.Collection;

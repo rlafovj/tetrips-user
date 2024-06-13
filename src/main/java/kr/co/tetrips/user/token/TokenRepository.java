@@ -1,4 +1,4 @@
-package com.tetrips.api.token;
+package kr.co.tetrips.user.token;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

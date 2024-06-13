@@ -1,12 +1,11 @@
-package com.tetrips.api.common.security.domain;
+package kr.co.tetrips.user.common.security.domain;
 
-import com.tetrips.api.user.User;
-import com.tetrips.api.user.UserRepository;
+import kr.co.tetrips.user.user.User;
+import kr.co.tetrips.user.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;

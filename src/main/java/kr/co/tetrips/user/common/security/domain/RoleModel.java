@@ -1,8 +1,8 @@
-package com.tetrips.api.common.security.domain;
+package kr.co.tetrips.user.common.security.domain;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import org.springframework.security.core.GrantedAuthority;
+
 import java.io.Serializable;
 @Entity
 @Getter

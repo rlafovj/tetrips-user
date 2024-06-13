@@ -1,11 +1,11 @@
-package com.tetrips.api.user;
+package kr.co.tetrips.user.user;
 
-import com.tetrips.api.common.JwtProvider;
-import com.tetrips.api.common.config.SecurityConfig;
-import com.tetrips.api.common.security.domain.LoginDTO;
-import com.tetrips.api.common.security.domain.MessengerVO;
-import com.tetrips.api.token.TokenRepository;
-import com.tetrips.api.token.Token;
+import kr.co.tetrips.user.common.JwtProvider;
+import kr.co.tetrips.user.common.config.SecurityConfig;
+import kr.co.tetrips.user.common.security.domain.LoginDTO;
+import kr.co.tetrips.user.common.security.domain.MessengerVO;
+import kr.co.tetrips.user.token.TokenRepository;
+import kr.co.tetrips.user.token.Token;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

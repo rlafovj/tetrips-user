@@ -1,4 +1,4 @@
-package com.tetrips.api.user;
+package kr.co.tetrips.user.user;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;

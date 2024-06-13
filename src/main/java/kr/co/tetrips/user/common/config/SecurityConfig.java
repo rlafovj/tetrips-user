@@ -1,5 +1,5 @@
-package com.tetrips.api.common.config;
-import org.springframework.boot.web.servlet.FilterRegistrationBean;
+package kr.co.tetrips.user.common.config;
+import kr.co.tetrips.user.common.security.filter.CustomRequestFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -14,9 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import com.tetrips.api.common.security.filter.CustomRequestFilter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.filter.OncePerRequestFilter;
 
 @RequiredArgsConstructor
 @Configuration

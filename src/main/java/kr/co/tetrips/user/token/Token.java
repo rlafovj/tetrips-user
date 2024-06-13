@@ -1,6 +1,6 @@
-package com.tetrips.api.token;
+package kr.co.tetrips.user.token;
 
-import com.tetrips.api.user.User;
+import kr.co.tetrips.user.user.User;
 import jakarta.persistence.*;
 import lombok.*;
 

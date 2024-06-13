@@ -1,10 +1,8 @@
-package com.tetrips.api.user;
+package kr.co.tetrips.user.user;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.querydsl.core.annotations.QueryProjection;
-import com.tetrips.api.token.Token;
-import jakarta.persistence.Column;
-import lombok.AllArgsConstructor;
+import kr.co.tetrips.user.token.Token;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;

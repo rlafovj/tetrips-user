@@ -1,7 +1,7 @@
-package com.tetrips.api.user;
+package kr.co.tetrips.user.user;
 
-import com.tetrips.api.common.security.domain.LoginDTO;
-import com.tetrips.api.common.security.domain.MessengerVO;
+import kr.co.tetrips.user.common.security.domain.LoginDTO;
+import kr.co.tetrips.user.common.security.domain.MessengerVO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;

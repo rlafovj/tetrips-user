@@ -1,4 +1,4 @@
-package com.tetrips.api.common.config;
+package kr.co.tetrips.user.common.config;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;

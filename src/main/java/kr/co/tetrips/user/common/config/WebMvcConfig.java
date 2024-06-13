@@ -1,6 +1,6 @@
-package com.tetrips.api.common.config;
+package kr.co.tetrips.user.common.config;
 
-import com.tetrips.api.common.interceptor.AuthInterceptor;
+import kr.co.tetrips.user.common.interceptor.AuthInterceptor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
