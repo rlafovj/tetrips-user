@@ -94,12 +94,29 @@ public class JwtProvider {
     return Instant.now().plus(refreshExpiredDate, ChronoUnit.MILLIS).toEpochMilli();
   }
 
+  public Boolean checkExpiration(String token){
+    return Stream.of(Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token))
+            .filter(i -> i.getPayload().getExpiration().after(Date.from(Instant.now())))
+            .map(i -> true)
+            .findAny()
+            .orElseGet(() -> false);
+  }
+
+  public String updateExpiration(String token){
+    token = Stream.of(Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token))
+            .map(i -> Jwts.builder()
+                    .expiration(Date.from(Instant.now().plus(accessExpiredDate, ChronoUnit.MILLIS)))
+                    .compact())
+                    .toString();
+    return token;
+  }
+
+
   public Boolean validateToken(String token, String subject) {
     try {
       return Stream.of(Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token))
               .filter(i -> i.getPayload().getSubject().equals(subject))
               .filter(i -> i.getPayload().getIssuer().equals(issuer))
-              .filter(i -> i.getPayload().getExpiration().after(Date.from(Instant.now())))
               .map(i -> true)
               .findAny()
               .orElseGet(() -> false);

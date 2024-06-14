@@ -3,6 +3,7 @@ package kr.co.tetrips.user.user;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 
+import java.util.Objects;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -23,5 +24,14 @@ public class UserQueryDSLImpl implements UserQueryDSL{
     return factory.selectFrom(QUser.user)
             .where(qUser.email.eq(email))
             .fetchFirst() != null;
+  }
+
+  @Override
+  public Long getUserIdByEmail(String email) {
+    QUser qUser = QUser.user;
+    return Objects.requireNonNull(factory.selectFrom(qUser)
+            .where(qUser.email.eq(email))
+            .fetchFirst())
+            .getId();
   }
 }
