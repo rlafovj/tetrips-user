@@ -103,12 +103,25 @@ public class JwtProvider {
   }
 
   public String updateExpiration(String token){
-    token = Stream.of(Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token))
+    return Stream.of(Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token))
             .map(i -> Jwts.builder()
                     .expiration(Date.from(Instant.now().plus(accessExpiredDate, ChronoUnit.MILLIS)))
                     .compact())
                     .toString();
-    return token;
+
+  }
+
+  public String updateAccessToken(String oldToken){
+    String newToken = Jwts.builder()
+            .issuer(issuer)
+            .signWith(secretKey)
+            .expiration(Date.from(Instant.now().plus(accessExpiredDate, ChronoUnit.MILLIS)))
+            .subject("access")
+            .claim("userEmail", getPayload(oldToken).get("userEmail", String.class))
+            .claim("userId", getPayload(oldToken).get("userId", Long.class))
+            .compact();
+    log.info("발급된 새 엑세스토큰 : " + newToken);
+    return newToken;
   }
 
 

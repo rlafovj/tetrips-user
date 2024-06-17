@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface TokenRepository extends JpaRepository<Token, Long>, TokenQueryDSL {
   void deleteById(Long id);
-  String getRefreshTokenById(Long id);
+  Token getRefreshTokenByUserId_Id(Long userId);
 }
