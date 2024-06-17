@@ -1,6 +1,7 @@
 package kr.co.tetrips.user.common.security.filter;
 
 import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.JwtException;
 import kr.co.tetrips.user.common.JwtProvider;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -15,6 +16,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -40,13 +42,20 @@ public class CustomRequestFilter extends OncePerRequestFilter {
       String token = jwtProvider.extractTokenFromHeader(request);
       String subject = "access";
       if (token != null && jwtProvider.validateToken(token, subject)) {
-        String email = jwtProvider.getPayload(token).get("userEmail", String.class);
-
-        UserDetails userDetails = userDetailsService.loadUserByUsername(email);
-        if (userDetails != null) {
-          UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-          log.info("Authenticated user with email : {}", email);
-          SecurityContextHolder.getContext().setAuthentication(authentication);
+        try{
+          if (jwtProvider.checkExpiration(token)) {
+          String email = jwtProvider.getPayload(token).get("userEmail", String.class);
+          UserDetails userDetails = userDetailsService.loadUserByUsername(email);
+          if (userDetails != null) {
+            UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+            log.info("Authenticated user with email : {}", email);
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+          }//accessToken 만료를 확인하는 필터 필요함
+        }else {
+            throw new ExpiredJwtException(null, null, "Access token expired. Please refresh request.");
+          }
+      } catch (ExpiredJwtException e) {
+          Objects.requireNonNull(response).sendError(HttpServletResponse.SC_UNAUTHORIZED, "Access token expired. Please refresh request." + e.getMessage());
         }
       }
     }
