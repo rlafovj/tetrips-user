@@ -16,8 +16,8 @@ public class UserDetailsDTO implements UserDetails {
     collect.add(new GrantedAuthority() {
       @Override
       public String getAuthority() {
-        ///return user.getRole();
-        return "";
+        return user.getRole().toString();
+//        return "";
       }
     });
     return collect;

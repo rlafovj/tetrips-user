@@ -46,27 +46,28 @@ public class User implements Serializable, UserDetails {
   private Token token;
 
   @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
-  List<RoleModel> roles;
-  public User(String email, String password, List<RoleModel> roles){
+  List<RoleModel> role;
+  public User(String email, String password, List<RoleModel> role){
     this.email = email;
     this.password = password;
-    this.roles = roles;
+    this.role = role;
   }
 
   @Builder(builderMethodName = "builder")
-  public User(Long id, String email, String password, String nickname, boolean gender, LocalDate birthDate){
+  public User(Long id, String email, String password, String nickname, boolean gender, LocalDate birthDate, List<RoleModel> role) {
     this.id = id;
     this.email = email;
     this.password = password;
     this.nickname = nickname;
     this.gender = gender;
     this.birthDate = birthDate;
+    this.role = role;
   }
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
     List<GrantedAuthority> authorities = new ArrayList<>();
-    this.roles.forEach(role -> authorities.add(new SimpleGrantedAuthority(role.getRoleName())));
+    this.role.forEach(role -> authorities.add(new SimpleGrantedAuthority(role.getRoleName())));
     return authorities;
   }
 

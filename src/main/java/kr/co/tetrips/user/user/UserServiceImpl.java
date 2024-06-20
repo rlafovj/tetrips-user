@@ -50,7 +50,7 @@ public class UserServiceImpl implements UserService {
         try {
             User user = userRepository.findUserByEmail(param.getEmail()).orElseGet(() -> User.builder().build());
             boolean flag = securityConfig.passwordEncoder().matches(param.getPassword(), user.getPassword());
-
+            //유효하지않은 사용자일시 토큰 발급할 필요 없음. 로직 추가 필요
             String accessToken = jwtProvider.createAccessToken(entityToDTO(user));
             String refreshToken = jwtProvider.createRefreshToken(entityToDTO(user));
 

@@ -50,7 +50,7 @@ public class CustomRequestFilter extends OncePerRequestFilter {
             UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
             log.info("Authenticated user with email : {}", email);
             SecurityContextHolder.getContext().setAuthentication(authentication);
-          }//accessToken 만료를 확인하는 필터 필요함
+          }
         }else {
             throw new ExpiredJwtException(null, null, "Access token expired. Please refresh request.");
           }

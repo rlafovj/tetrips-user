@@ -36,7 +36,7 @@ public class SecurityConfig {
         authorizeRequest
           .requestMatchers(
                   AntPathRequestMatcher.antMatcher("/admin/**")
-          ).authenticated()
+          ).hasRole("ADMIN")
           .requestMatchers(
                   AntPathRequestMatcher.antMatcher("/**"),
                   AntPathRequestMatcher.antMatcher("/error"),
@@ -46,6 +46,7 @@ public class SecurityConfig {
                   AntPathRequestMatcher.antMatcher("/swagger-resources/**"),
                   AntPathRequestMatcher.antMatcher("/v3/api-docs/**")
           ).permitAll()
+          .anyRequest().authenticated()
 
       )
       //    .addFilterAt(
