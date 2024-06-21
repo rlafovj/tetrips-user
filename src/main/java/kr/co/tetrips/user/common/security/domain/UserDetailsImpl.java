@@ -20,33 +20,32 @@ public class UserDetailsImpl implements UserDetails {
   private final String nickname;
   private final boolean gender;
   private final LocalDate birthDate;
-  private final Collection<? extends GrantedAuthority> getAuthorities;
+  private final Collection<? extends GrantedAuthority> authorities;
 
   public static UserDetailsImpl build(User user){
-    return null;
-//    return new UserDetailsImpl(
-//      user.getId(),
-//      user.getEmail(),
-//      user.getPassword(),
-//      user.getNickname(),
-//      user.isGender(),
-//      user.getBirthDate(),
-//      //getAuthorities
-//    );
+    return new UserDetailsImpl(
+      user.getId(),
+      user.getEmail(),
+      user.getPassword(),
+      user.getNickname(),
+      user.isGender(),
+      user.getBirthDate(),
+      user.getAuthorities()
+    );
   }
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
-    return null;
+    return authorities;
   }
 
   @Override
   public String getPassword() {
-    return null;
+    return password;
   }
 
   @Override
   public String getUsername() {
-    return null;
+    return email;
   }
 }

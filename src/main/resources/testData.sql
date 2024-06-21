@@ -3,3 +3,8 @@ insert into users (email, password, nickname, gender, birth_date) values ('qwert
 insert into users (email, password, nickname, gender, birth_date) values ('qwerty3', '1234', '코딩하는개발자', 1, '2022-02-22');
 insert into users (email, password, nickname, gender, birth_date) values ('qwerty4', '1234', '야근하는직장인', 0, '2033-03-01');
 insert into users (email, password, nickname, gender, birth_date) values ('qwerty5', '1234', '노래하는아이돌', 1, '2044-04-01');
+
+# insert into role_model (role_name) value ('ROLE_USER');
+# insert into role_model (role_name) value ('ROLE_ADMIN');
+#
+# insert into users_role (users_id, role_id) value (1, 1);

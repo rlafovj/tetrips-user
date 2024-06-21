@@ -38,4 +38,9 @@ public class UserController {
         return ResponseEntity.ok(userService.existsEmail(email));
     }
 
+    @PostMapping("/heartbeat")
+    public ResponseEntity<MessengerVO> heartbeat() {
+        return ResponseEntity.ok(MessengerVO.builder().message("SUCCESS").status(200).build());
+    }
+
 }

@@ -9,6 +9,13 @@ import kr.co.tetrips.user.token.Token;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
 import java.util.stream.Stream;
@@ -21,6 +28,8 @@ public class UserServiceImpl implements UserService {
     private final TokenRepository tokenRepository;
     private final JwtProvider jwtProvider;
     private final SecurityConfig securityConfig;
+    private final UserDetailsService userDetailsService;
+    private final AuthenticationManager authenticationManager;
 
     @Override
     @Transactional
@@ -50,14 +59,24 @@ public class UserServiceImpl implements UserService {
         try {
             User user = userRepository.findUserByEmail(param.getEmail()).orElseGet(() -> User.builder().build());
             boolean flag = securityConfig.passwordEncoder().matches(param.getPassword(), user.getPassword());
-            //유효하지않은 사용자일시 토큰 발급할 필요 없음. 로직 추가 필요
-            String accessToken = jwtProvider.createAccessToken(entityToDTO(user));
-            String refreshToken = jwtProvider.createRefreshToken(entityToDTO(user));
-
-            jwtProvider.printPayload(accessToken);
-            jwtProvider.printPayload(refreshToken);
-
+            String accessToken = null;
+            String refreshToken = null;
             if (flag) {
+                accessToken = jwtProvider.createAccessToken(entityToDTO(user));
+                refreshToken = jwtProvider.createRefreshToken(entityToDTO(user));
+
+                jwtProvider.printPayload(accessToken);
+                jwtProvider.printPayload(refreshToken);
+
+                SecurityContext securityContext = SecurityContextHolder.createEmptyContext();
+                UserDetails userDetails = userDetailsService.loadUserByUsername(user.getEmail());
+                UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userDetails, param.getPassword(), userDetails.getAuthorities());
+                Authentication authentication = authenticationManager.authenticate(authenticationToken);
+                securityContext.setAuthentication(authentication);
+                if(authentication.isAuthenticated()){
+                    log.info("@@@@@@@@@@@@인증된유저임@@@@@@@@@@@@User is authenticated@@@@@@@@@@@@@@");
+                }
+                SecurityContextHolder.setContext(securityContext);
                 Token token = Token.builder()
                         .userId(user)
                         .expDate(jwtProvider.getRefreshExpired())

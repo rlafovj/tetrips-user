@@ -83,10 +83,6 @@ public class JwtProvider {
   }
 
   public Claims getPayload(String token) {
-//    Jws<Claims> claimsJws = Jwts.parser().verifyWith(secretKey).build()
-//            .parseSignedClaims(accessToken);
-//    String IDstr = claimsJws.getPayload().getId();
-//    log.info("Jwt 프로바이더 Access Token ID : "+IDstr);
     return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload();
   }
 

@@ -2,6 +2,7 @@ package kr.co.tetrips.user.common.config;
 import kr.co.tetrips.user.common.security.filter.CustomRequestFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -13,22 +14,26 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.filter.OncePerRequestFilter;
 
 @RequiredArgsConstructor
 @Configuration
+@Order(1)
 @EnableWebSecurity
 public class SecurityConfig {
+  private final CustomRequestFilter customRequestFilter;
+//  private final AuthenticationManagerBuilder authenticationManagerBuilder;
+//  private final AuthenticationManager authenticationManager;
   //Flux 방식으로 마이그레이션 필요함 240612
   // 개발자가 기획에 따라 커스터마이징 해야 함
-//    private final CustomRequestFilter jwtAuthenticationFilter ;
-//    private final UserDetailsService customerUserDetailsService ;
   @Bean
   public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     AuthenticationManagerBuilder managerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
-    AuthenticationManager manager = managerBuilder.build();
-    http.authenticationManager(manager);
+    AuthenticationManager authenticationManager = managerBuilder.build();
+    http.authenticationManager(authenticationManager);
 
     http
       .csrf(AbstractHttpConfigurer::disable)
@@ -38,7 +43,6 @@ public class SecurityConfig {
                   AntPathRequestMatcher.antMatcher("/admin/**")
           ).hasRole("ADMIN")
           .requestMatchers(
-                  AntPathRequestMatcher.antMatcher("/**"),
                   AntPathRequestMatcher.antMatcher("/error"),
                   AntPathRequestMatcher.antMatcher("/api/user/login/**"),
                   AntPathRequestMatcher.antMatcher("/api/user/signup/**"),
@@ -48,10 +52,10 @@ public class SecurityConfig {
           ).permitAll()
           .anyRequest().authenticated()
 
-      )
-      //    .addFilterAt(
-      //            this.abstractAuthenticationProcessingFilter(manager),
-      //            UsernamePasswordAuthenticationFilter.class)
+      ).addFilterBefore(customRequestFilter, UsernamePasswordAuthenticationFilter.class)
+//          .addFilterAt(
+//                  this.abstractAuthenticationProcessingFilter(managerBuilder.build()),
+//                  UsernamePasswordAuthenticationFilter.class)
       .headers(
         headersConfigurer ->
           headersConfigurer
@@ -69,7 +73,7 @@ public class SecurityConfig {
 
     return http.build();
   }
-  public AbstractAuthenticationProcessingFilter abstractAuthenticationProcessingFilter(final AuthenticationManager manager) {
+  public AbstractAuthenticationProcessingFilter abstractAuthenticationProcessingFilter(final AuthenticationManager authenticationManager) {
     // CustomRequestFilter filter = new CustomRequestFilter(
     //        "/api/login",
     //        manager
