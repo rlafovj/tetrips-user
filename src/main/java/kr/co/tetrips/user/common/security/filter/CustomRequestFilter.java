@@ -35,7 +35,7 @@ public class CustomRequestFilter extends OncePerRequestFilter {
     private final UserDetailsService userDetailsService;
     private final UserRepository userRepository;
     private final TokenRepository tokenRepository;
-     private final AuthenticationManager authenticationManager;
+     private final AuthenticationManager authenticationManager;//이게 문제임
 
   @Override
   protected void doFilterInternal(@Nullable HttpServletRequest request, @Nullable HttpServletResponse response, @Nullable FilterChain filterChain) throws ServletException, IOException {
@@ -63,17 +63,17 @@ public class CustomRequestFilter extends OncePerRequestFilter {
             securityContext.setAuthentication(authentication);
 
         }else {
-            throw new ExpiredJwtException(null, null, "Access token expired. Please refresh request. 다시.");
+            throw new ExpiredJwtException(null, null, "Access token expired. Please refresh request.");
           }
       } catch (ExpiredJwtException e) {
-          Objects.requireNonNull(response).sendError(HttpServletResponse.SC_UNAUTHORIZED, "Access token expired. Please refresh request. 다시2" + e.getMessage());
+          Objects.requireNonNull(response).sendError(HttpServletResponse.SC_UNAUTHORIZED, "Access token expired. Please refresh request." + e.getMessage());
         }
       }
     }
       filterChain.doFilter(request, response);
     }catch (Exception e){
       log.error("doFilterInternal Error occurred while filtering request : {}", e.getMessage());
-      Objects.requireNonNull(response).sendError(HttpServletResponse.SC_UNAUTHORIZED, "Access token expired. Please refresh request. 다시3" + e.getMessage());
+      Objects.requireNonNull(response).sendError(HttpServletResponse.SC_UNAUTHORIZED, "Access token expired. Please refresh request." + e.getMessage());
     }
   }
 }

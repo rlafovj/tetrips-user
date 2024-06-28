@@ -31,9 +31,9 @@ public class SecurityConfig {
   // 개발자가 기획에 따라 커스터마이징 해야 함
   @Bean
   public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-    AuthenticationManagerBuilder managerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
-    AuthenticationManager authenticationManager = managerBuilder.build();
-    http.authenticationManager(authenticationManager);
+//    AuthenticationManagerBuilder managerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
+//    AuthenticationManager authenticationManager = managerBuilder.build();
+//    http.authenticationManager(authenticationManager);
 
     http
       .csrf(AbstractHttpConfigurer::disable)
@@ -52,7 +52,7 @@ public class SecurityConfig {
           ).permitAll()
           .anyRequest().authenticated()
 
-      ).addFilterBefore(customRequestFilter, UsernamePasswordAuthenticationFilter.class)
+      ).addFilterBefore(customRequestFilter, UsernamePasswordAuthenticationFilter.class)//여기가 문제
 //          .addFilterAt(
 //                  this.abstractAuthenticationProcessingFilter(managerBuilder.build()),
 //                  UsernamePasswordAuthenticationFilter.class)
@@ -81,7 +81,7 @@ public class SecurityConfig {
     CustomRequestFilter filter = null;
     return null;
   }
-  @Bean
+  @Bean//이새끼가 문제임
   public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception{
     return authenticationConfiguration.getAuthenticationManager();}
   @Bean
